@@ -27,7 +27,6 @@ const JobForm = () => {
 
         if (!response.ok) {
             setError(json.error)
-            console.log("bruh")
             setEmptyFields(json.emptyFields)
         }
         if (response.ok) {
@@ -36,14 +35,15 @@ const JobForm = () => {
             setLink('')
             setError(null)
             setEmptyFields([])
-            dispatch({type: 'CREATE_WORKOUT', payload: json})
+            dispatch({type: 'CREATE_JOB', payload: json})
             console.log('new job added', json)
         }
     }
 
     return (
-        <form onSubmit={handleSubmit} className="create">
+        <form className="create" onSubmit={handleSubmit}>
             <h3>Add a New Job</h3>
+            
             <label>Company:</label>
             <input
                 type='text'

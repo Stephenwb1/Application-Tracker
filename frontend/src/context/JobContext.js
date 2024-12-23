@@ -12,10 +12,13 @@ export const jobsReducer = (state, action) => {//this updates the list of jobs w
             return {
                 jobs: [action.payload, ...state.jobs]
             }
+        case 'DELETE_JOB':
+            return {
+                jobs: state.jobs.filter((w) => w._id !== action.payload._id)
+            }
         default:
             return state
     }
-
 }
 
 export const JobsContextProvider = ({children}) => {

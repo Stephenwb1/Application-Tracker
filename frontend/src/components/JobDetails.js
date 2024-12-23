@@ -7,7 +7,7 @@ const JobDetails = ({job}) => {
     const {dispatch} = useJobsContext()
 
     const handleClick = async () => {
-        const response = await fetch ('/api/jobs' + job._id, {
+        const response = await fetch('/api/jobs' + job._id, {
             method: 'DELETE'
         })
         const  json = await response.json()
@@ -16,7 +16,7 @@ const JobDetails = ({job}) => {
             dispatch({type: 'DELETE_JOB', payload: json})
         }
     }
-
+    
     return (
         <div className="job-details">
             <h4>{job.company}</h4>
