@@ -10,16 +10,18 @@ const Home = () => {
 
     useEffect(() => {
         const fetchJobs = async () => {
-            const response = await fetch('/ali/jobs')
+            const response = await fetch('/api/jobs')
+
             const json = await response.json()
 
             if (response.ok) {
+                console.log('bruh')
                 dispatch({type:'SET_JOBS', payload: json})
             }
         }
 
-        fetchJobs()        
-    }, [dispatch])
+        fetchJobs()
+    }, [dispatch])//dependency array, since its empty, useEffect will only fire once
 
     return (
         <div className="home">
@@ -28,7 +30,7 @@ const Home = () => {
                     <JobDetails key={job._id} job={job}/>
                 ))}
             </div>
-            <JobForm/>
+            <JobForm />
         </div>
     )
 }

@@ -8,10 +8,10 @@ const jobSchema = new Schema({
         required: true
     },
     title: {
-        type: String,
+        type: String
     },
     link: {
-        type: String,
+        type: String
     }
 }, {timestamps: true})
 

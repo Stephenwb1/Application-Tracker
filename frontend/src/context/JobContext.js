@@ -1,10 +1,12 @@
 import {createContext, useReducer} from 'react'
 
+
 export const JobsContext = createContext()
 
 export const jobsReducer = (state, action) => {//this updates the list of jobs without contacting the server. > inserts new html
     switch(action.type) {
         case 'SET_JOBS':
+            console.log("set_jobs ran")
             return {
                 jobs: action.payload
             }

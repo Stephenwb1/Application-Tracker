@@ -7,9 +7,10 @@ const JobDetails = ({job}) => {
     const {dispatch} = useJobsContext()
 
     const handleClick = async () => {
-        const response = await fetch('/api/jobs' + job._id, {
+        const response = await fetch('/api/jobs/' + job._id, {
             method: 'DELETE'
         })
+        console.log("bruh")
         const  json = await response.json()
 
         if (response.ok) {
@@ -25,7 +26,7 @@ const JobDetails = ({job}) => {
             <p>{formatDistanceToNow(new Date(job.createdAt), {addSuffix: true})}</p>
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
         </div>
-    )
+    );
 }
 
-export default JobDetails
+export default JobDetails;

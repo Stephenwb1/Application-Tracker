@@ -15,6 +15,7 @@ const JobForm = () => {
         e.preventDefault()
 
         const job = {company, title, link}
+        console.log("Job data being sent:", job)
 
         const response = await fetch('/api/jobs', {
             method: 'POST',
@@ -23,6 +24,9 @@ const JobForm = () => {
                 'Content-Type': 'application/json'
             }
         })
+
+        console.log("Raw response:", response);
+
         const json = await response.json()
 
         if (!response.ok) {

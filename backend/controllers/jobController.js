@@ -1,25 +1,25 @@
 const Job = require('../models/jobModel')
 const mongoose = require('mongoose')
 
-//GET all the jobs
+//get all the jobs
 const getJobs = async (req, res) => {
     const jobs = await Job.find({}).sort({createdAt: -1})
 
     res.status(200).json(jobs)
 }
 
-//GET a single job
+//get a single job
 const getJob = async (req, res) => {
     const {id} = req.params
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
+    if(!mongoose.Types.ObjectId.isValid(id)) {//checks if the ID is valid
         return res.status(404).json({error: 'No such job'})
     }
 
     const job = await Job.findById(id)
 
     if (!job) {
-        return res.status(404).json({error: 'No such job'})
+        return res.status(404).json({error: "No such job"})
     }
 
     res.status(200).json(job)
@@ -35,35 +35,35 @@ const createJob = async (req, res) => {
         emptyFields.push('company')
     }
     if(emptyFields.length > 0) {
-        return res.status(404).json({error: 'Enter a valid company name', emptyFields})
+        return res.status(400).json({error: 'Please fill in all the fields', emptyFields})
     }
 
     try {
         const job = await Job.create({company, title, link})
         res.status(200).json(job)
     } catch(error) {
-        res.status(404).json({error: error.message})
+        res.status(400).json({error: error.message})
     }
 }
 
-//delete a specific job
+//delete a job
 const deleteJob = async (req, res) => {
     const {id} = req.params
-    
-    if(!mongoose.Types.ObjectId.isValid(id)) {
+
+    if(!mongoose.Types.ObjectId.isValid(id)) {//checks if the ID is valid
         return res.status(404).json({error: 'No such job'})
     }
 
     const job = await Job.findOneAndDelete({_id: id})
 
     if (!job) {
-        return res.status(404).json({error: 'No such job'})
+        return res.status(404).json({error: "No such job"})
     }
-
+    
     res.status(200).json(job)
 }
 
-//update an existing job
+//update a job
 const updateJob = async (req, res) => {
     const {id} = req.params
 
@@ -82,6 +82,8 @@ const updateJob = async (req, res) => {
     res.status(200).json(job)
 }
 
+
+//export stuff
 module.exports = {
     getJobs,
     getJob,
