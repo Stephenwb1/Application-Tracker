@@ -1,0 +1,3 @@
+1. when the date is more than a few days, the date-fns breaks, and i get the error "invalid time"
+
+2. ensure that we are sending api reuqests on the same host number in the frontend as the backend

@@ -48,23 +48,26 @@ const JobForm = () => {
         <form className="create" onSubmit={handleSubmit}>
             <h3>Add a New Job</h3>
             
-            <label>Company:</label>
+            <label></label>
             <input
                 type='text'
+                placeholder='Company'
                 onChange={(e) => setCompany(e.target.value)}
                 value={company}
                 className={emptyFields.includes('company') ? 'error' : ''}
             />
-            <label>Title:</label>
+            <label></label>
             <input
                 type='text'
+                placeholder="Title (optional)"
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
                 className={emptyFields.includes('title') ? 'error' : ''}
             />
-            <label>Link:</label>
+            <label></label>
             <input
                 type='text'
+                placeholder="Link (optional)"
                 onChange={(e) => setLink(e.target.value)}
                 value={link}
                 className={emptyFields.includes('link') ? 'error' : ''}

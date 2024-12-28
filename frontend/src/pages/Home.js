@@ -24,13 +24,16 @@ const Home = () => {
     }, [dispatch])//dependency array, since its empty, useEffect will only fire once
 
     return (
-        <div className="home">
-            <div className="jobs">
-                {jobs && jobs.map((job) => (
-                    <JobDetails key={job._id} job={job}/>
-                ))}
+        <div className="home" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', width: '100%'}}>
+            <div style={{ gridColumn: '1 / 2', display: 'flex', flexDirection: 'column', gap: '20px' }}>            
+                <JobForm />
+                <div className="jobs">
+                    <h3>Jobs you've applied to</h3>
+                    {jobs && jobs.map((job) => (
+                        <JobDetails key={job._id} job={job}/>
+                    ))}
+                </div>
             </div>
-            <JobForm />
         </div>
     )
 }

@@ -17,13 +17,29 @@ const JobDetails = ({job}) => {
             dispatch({type: 'DELETE_JOB', payload: json})
         }
     }
+
+    const formatLink = () => {
+        if (!job.link.startsWith('http://') && !job.link.startsWith('https://')) {
+            return `https://${job.link}`
+        }
+        return job.link
+    }
+
+    const isLink = job.link && job.link.trim() !== ""
+    
     
     return (
         <div className="job-details">
-            <h4>{job.company}</h4>
-            <p><strong>Title: </strong>{job.title}</p>
-            <p><strong>Link: </strong>{job.link}</p>
-            <p>{formatDistanceToNow(new Date(job.createdAt), {addSuffix: true})}</p>
+
+            {isLink && <h4 style={{display: 'inline'}}>
+                <a 
+                href={formatLink(job.link)} target="_blank" rel="noopener noreferrer">{job.company}
+                </a>
+                </h4>}
+            {!isLink && <h4 style={{display: 'inline'}}>{job.company}</h4>}
+            
+            <p>{job.title}</p>
+            <p style={{float: 'right', paddingRight: '55px'}}>{formatDistanceToNow(new Date(job.createdAt), {addSuffix: true})}</p>
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
         </div>
     );
