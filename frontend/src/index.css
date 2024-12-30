@@ -3,16 +3,16 @@
 
 /* layout */
 :root {
-  --primary: #1aac83;
+  --primary: #b5ceba;
   --error: #e7195a;
 }
 body {
-  background: #f1f1f1;
+  background: #121212;
   margin: 0;
   font-family: "Poppins";
 }
 header {
-  background: #fff;
+  background: #3f3f3f;
 }
 header .container {
   max-width: 1400px;
@@ -23,7 +23,7 @@ header .container {
   justify-content: space-between;
 }
 header a {
-  color: #333;
+  color: #fff;
   text-decoration: none;
 }
 .pages{
@@ -46,9 +46,10 @@ header a {
   gap: 50px;
   grid-template-columns: 1fr 1fr;
   width: 100%;
+  color: #fff;
 }
 .job-details {
-  background: #fff;
+  background: #353735;
   border-radius: 4px;
   margin: 20px auto;
   padding: 20px;
@@ -65,7 +66,7 @@ header a {
   padding-left: 40px;
   margin: 0;
   font-size: 0.9em;
-  color: #555;
+  color: #f1f1f1;
 }
 .job-details a {
   color: var(--primary);
@@ -75,7 +76,7 @@ header a {
   top: 20px;
   right: 20px;
   cursor: pointer;
-  background: #f1f1f1;
+  background: #c5d9c9;
   padding: 6px;
   border-radius: 50%;
   color: #333;
@@ -90,14 +91,16 @@ input {
   margin-top: 10px;
   margin-bottom: 20px;
   width: 100%;
-  border: 1px solid #ddd;
+  border: 0px solid #ddd;
   border-radius: 4px;
   box-sizing: border-box;
+  background-color: #7a7b7a;
+  color: #f1f1f1;
 }
 form button {
   background: var(--primary);
   border: 0;
-  color: #fff;
+  color: #121212;
   padding: 10px;
   font-family: "Poppins";
   border-radius: 4px;
