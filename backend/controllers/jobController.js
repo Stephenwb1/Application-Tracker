@@ -25,6 +25,29 @@ const getJob = async (req, res) => {
     res.status(200).json(job)
 }
 
+//get a list of jobs
+const getSearch = async (req, res) => {
+    const searchTerm = req.query.q; 
+  
+  if (!searchTerm) {
+    return res.status(400).json({ message: 'No search term provided' });
+  }
+
+  try {
+    const results = await Job.find({
+      $or: [
+        { company: { $regex: searchTerm, $options: 'i' } },
+        { title: { $regex: searchTerm, $options: 'i' } }
+      ]
+    });
+
+    res.json(results);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error performing search' });
+  }
+}
+
 //create a new job
 const createJob = async (req, res) => {
     const {company, title, link} = req.body
@@ -89,5 +112,6 @@ module.exports = {
     getJob,
     createJob,
     deleteJob,
-    updateJob
+    updateJob,
+    getSearch
 }

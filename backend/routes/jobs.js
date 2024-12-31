@@ -4,7 +4,8 @@ const {
     getJob,
     createJob,
     deleteJob,
-    updateJob
+    updateJob,
+    getSearch
 } = require('../controllers/jobController')
 
 const router = express.Router();
@@ -14,6 +15,9 @@ router.get('/', getJobs);
 
 //GET a single job
 router.get('/:id', getJob);
+
+//GET a list of jobs
+router.get('/search', getSearch)
 
 //POST a new job
 router.post('/', createJob);
