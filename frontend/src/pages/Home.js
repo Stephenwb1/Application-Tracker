@@ -5,9 +5,10 @@ import { useJobsContext } from '../hooks/useJobsContext';
 import JobDetails from '../components/JobDetails';
 import JobForm from '../components/JobForm';
 import SearchBar from '../components/SearchBar';
+import JobCategoryChart from '../components/JobCategoryChart'
 
 const Home = () => {
-  const { jobs, dispatch } = useJobsContext();
+  const {jobs, popularTitles, dispatch} = useJobsContext()
   const [filteredJobs, setFilteredJobs] = useState([]);  // Initialize with empty array
   const [query, setQuery] = useState('');
 
@@ -18,8 +19,21 @@ const Home = () => {
 
       if (response.ok) {
         dispatch({ type: 'SET_JOBS', payload: json });
+
+        //sort titles by popular
+        const titleCounts = {}
+
+        json.forEach((job) => {
+            titleCounts[job.title] = (titleCounts[job.title] || 0) + 1
+        })
+
+        const sortedTitles = Object.entries(titleCounts)
+            .map(([title, count]) => ({title, count}))
+            .sort((a, b) => b.count - a.count)
+
+        dispatch({type: 'SET_POPULAR_TITLES', payload: sortedTitles})
       }
-    };
+    }
 
     fetchJobs();
   }, [dispatch]);
@@ -42,12 +56,16 @@ const Home = () => {
 
   return (
     <div className="home" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', width: '100%' }}>
+      {/* Left column: JobForm, SearchBar, and Jobs List */}
       <div style={{ gridColumn: '1 / 2', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+        
+        {/* Job Form */}
         <JobForm />
         
-        {/* Keep the SearchBar only under Add job */}
-        <SearchBar query={query} onSearch={handleSearch} />  {/* Search bar below "Add Job" */}
-
+        {/* Search Bar under Job Form */}
+        <SearchBar query={query} onSearch={handleSearch} />
+        
+        {/* Jobs List */}
         <div className="jobs">
           <h3>Jobs you've applied to</h3>
           {filteredJobs.length > 0 ? (
@@ -56,6 +74,16 @@ const Home = () => {
             <p>No jobs found for your search.</p>
           )}
         </div>
+      </div>
+
+      {/* Right column: Job Category Chart */}
+      <div style={{ gridColumn: '2 / 2', width: '600px', height: '300px', paddingTop: '50px' }}>
+        <JobCategoryChart 
+          data={(popularTitles || []).map(item => ({
+            name: item.title,
+            value: item.count
+          }))}
+        />
       </div>
     </div>
   );

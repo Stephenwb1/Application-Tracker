@@ -16,6 +16,22 @@ const JobDetails = ({job}) => {
         if (response.ok) {
             dispatch({type: 'DELETE_JOB', payload: json})
         }
+    
+        //sort titles by popular
+        const response1 = await fetch('/api/jobs/')
+        const json1 = await response1.json()
+        const titleCounts = {}
+
+        json1.forEach((job) => {
+            titleCounts[job.title] = (titleCounts[job.title] || 0) + 1
+        })
+
+        const sortedTitles = Object.entries(titleCounts)
+            .map(([title, count]) => ({title, count}))
+            .sort((a, b) => b.count - a.count)
+
+        dispatch({type: 'SET_POPULAR_TITLES', payload: sortedTitles})
+        
     }
 
     const formatLink = () => {
