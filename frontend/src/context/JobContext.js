@@ -25,7 +25,7 @@ export const jobsReducer = (state, action) => {//this updates the list of jobs w
 
 export const JobsContextProvider = ({children}) => {
     const [state, dispatch] = useReducer(jobsReducer, {
-        jobs: null
+        jobs: []
     })
 
     return (
