@@ -41,6 +41,23 @@ const JobForm = () => {
             setEmptyFields([])
             dispatch({type: 'CREATE_JOB', payload: json})
             console.log('new job added', json)
+
+
+
+            const response = await fetch('/api/jobs')
+            const json1 = await response.json()
+            //sort titles by popular
+            const titleCounts = {}
+
+            json1.forEach((job) => {
+                titleCounts[job.title] = (titleCounts[job.title] || 0) + 1
+            })
+
+            const sortedTitles = Object.entries(titleCounts)
+                .map(([title, count]) => ({title, count}))
+                .sort((a, b) => b.count - a.count)
+
+            dispatch({type: 'SET_POPULAR_TITLES', payload: sortedTitles})
         }
     }
 

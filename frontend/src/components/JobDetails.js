@@ -16,7 +16,7 @@ const JobDetails = ({job}) => {
         if (response.ok) {
             dispatch({type: 'DELETE_JOB', payload: json})
         }
-    
+
         //sort titles by popular
         const response1 = await fetch('/api/jobs/')
         const json1 = await response1.json()

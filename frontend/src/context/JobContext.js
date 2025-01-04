@@ -1,6 +1,5 @@
 import {createContext, useReducer} from 'react'
 
-
 export const JobsContext = createContext()
 
 export const jobsReducer = (state, action) => {//this updates the list of jobs without contacting the server. > inserts new html
@@ -23,8 +22,14 @@ export const jobsReducer = (state, action) => {//this updates the list of jobs w
                 ...state, 
                 popularTitles: action.payload
             }
+        case 'SET_POPULAR_TITLES':
+            return {
+                ...state, 
+                popularTitles: action.payload
+            }
         default:
             return state
+
     }
 }
 
