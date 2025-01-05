@@ -17,7 +17,7 @@ const JobForm = () => {
         const job = {company, title, link}
         console.log("Job data being sent:", job)
 
-        const response = await fetch('/api/jobs', {
+        const response = await fetch('https://backend-o118.onrender.com/api/jobs', {
             method: 'POST',
             body: JSON.stringify(job),
             headers: {
@@ -44,7 +44,7 @@ const JobForm = () => {
 
 
 
-            const response = await fetch('/api/jobs')
+            const response = await fetch('https://backend-o118.onrender.com/api/jobs')
             const json1 = await response.json()
             //sort titles by popular
             const titleCounts = {}

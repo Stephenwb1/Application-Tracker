@@ -7,7 +7,7 @@ const JobDetails = ({job}) => {
     const {dispatch} = useJobsContext()
 
     const handleClick = async () => {
-        const response = await fetch('/api/jobs/' + job._id, {
+        const response = await fetch('https://backend-o118.onrender.com/api/jobs/' + job._id, {
             method: 'DELETE'
         })
         console.log("bruh")
@@ -18,7 +18,7 @@ const JobDetails = ({job}) => {
         }
 
         //sort titles by popular
-        const response1 = await fetch('/api/jobs/')
+        const response1 = await fetch('https://backend-o118.onrender.com/api/jobs/')
         const json1 = await response1.json()
         const titleCounts = {}
 
