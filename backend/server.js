@@ -14,7 +14,8 @@ app.use(express.json());
 //cors middleware
 const corsOptions = {
     origin: process.env.CLIENT_URL,
-    methods: ['GET', 'POST', 'PATCH', 'DELETE']
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    credentials: true
 }
 app.use(cors(corsOptions))
 
