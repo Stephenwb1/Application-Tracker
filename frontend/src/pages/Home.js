@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useJobsContext } from '../hooks/useJobsContext';
-
+import { useAuthContext} from '../hooks/useAuthContext'
 // components
 import JobDetails from '../components/JobDetails';
 import JobForm from '../components/JobForm';
@@ -11,10 +11,15 @@ const Home = () => {
   const {jobs, popularTitles, dispatch} = useJobsContext()
   const [filteredJobs, setFilteredJobs] = useState([]);  // Initialize with empty array
   const [query, setQuery] = useState('');
+  const {user} = useAuthContext()
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const response = await fetch('https://backend-o118.onrender.com/api/jobs');
+      const response = await fetch('https://backend-o118.onrender.com/api/jobs/', {
+        headers: {
+          'Authorization': `Bearer ${user.token}`
+        }
+      });
       const json = await response.json();
 
       if (response.ok) {
@@ -34,8 +39,11 @@ const Home = () => {
         dispatch({type: 'SET_POPULAR_TITLES', payload: sortedTitles})
       }
     }
+    
 
-    fetchJobs();
+    if (user) {
+      fetchJobs();
+    }
   }, [dispatch]);
 
   useEffect(() => {

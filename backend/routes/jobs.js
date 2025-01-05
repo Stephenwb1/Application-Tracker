@@ -7,8 +7,12 @@ const {
     updateJob,
     getSearch
 } = require('../controllers/jobController')
+const requireAuth = require('../middleware/requireAuth')
+
 
 const router = express.Router();
+
+router.use(requireAuth)
 
 //GET all jobs
 router.get('/', getJobs);
