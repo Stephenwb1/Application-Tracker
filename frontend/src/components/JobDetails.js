@@ -1,14 +1,22 @@
 import {useJobsContext} from '../hooks/useJobsContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 //date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 const JobDetails = ({job}) => {
     const {dispatch} = useJobsContext()
-
+    const {user} = useAuthContext()
     const handleClick = async () => {
+        if(!user) {
+            return
+        }
+
         const response = await fetch('/api/jobs/' + job._id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
         })
         console.log("bruh")
         const  json = await response.json()
@@ -18,7 +26,12 @@ const JobDetails = ({job}) => {
         }
 
         //sort titles by popular
-        const response1 = await fetch('/api/jobs/')
+        const response1 = await fetch('/api/jobs/',
+            {
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
         const json1 = await response1.json()
         const titleCounts = {}
 

@@ -1,8 +1,10 @@
 import {useState} from 'react'
 import {useJobsContext} from '../hooks/useJobsContext'
-
+import { useAuthContext } from '../hooks/useAuthContext'
 const JobForm = () => {
     const {dispatch} = useJobsContext()
+    const {user} = useAuthContext()
+    
     const [company, setCompany] = useState('')
     const [title, setTitle] = useState('')
     const [link, setLink] = useState('')
@@ -14,6 +16,11 @@ const JobForm = () => {
         //prevent default method of refreshing the page
         e.preventDefault()
 
+        if (!user) {
+            setError('You must be logged in')
+            return
+        }
+
         const job = {company, title, link}
         console.log("Job data being sent:", job)
 
@@ -21,7 +28,8 @@ const JobForm = () => {
             method: 'POST',
             body: JSON.stringify(job),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             }
         })
 
@@ -44,11 +52,17 @@ const JobForm = () => {
 
 
 
-            const response = await fetch('/api/jobs')
+            const response = await fetch('/api/jobs', {
+                //method: 'POST',
+                //body: JSON.stringify(job),
+                headers: {
+                    'Authorization': `Bearer ${user.token}`
+                }
+            })
             const json1 = await response.json()
             //sort titles by popular
             const titleCounts = {}
-
+            console.log("STUFF:", json1)
             json1.forEach((job) => {
                 titleCounts[job.title] = (titleCounts[job.title] || 0) + 1
             })
