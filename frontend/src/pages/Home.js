@@ -14,7 +14,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const response = await fetch('/api/jobs');
+      const response = await fetch('https://backend-o118.onrender.com/api/jobs');
       const json = await response.json();
 
       if (response.ok) {

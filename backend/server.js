@@ -28,7 +28,7 @@ app.use('/api/jobs', jobRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
-        app.listen(process.env.PORT || 4000, () => {
+        app.listen(process.env.PORT || 4211, () => {
             console.log('connected to db; listening on port', process.env.PORT)
         })
     })
