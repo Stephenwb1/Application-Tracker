@@ -26,6 +26,7 @@ app.use((req, res, next) => {
 })
 
 app.use('/api/jobs', jobRoutes)
+app.use('/api/user', userRoutes) //this line was missing
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
