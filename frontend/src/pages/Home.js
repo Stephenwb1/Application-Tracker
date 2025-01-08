@@ -9,13 +9,15 @@ import JobCategoryChart from '../components/JobCategoryChart'
 
 const Home = () => {
   const {jobs, popularTitles, dispatch} = useJobsContext()
-  const [filteredJobs, setFilteredJobs] = useState([]);  // Initialize with empty array
-  const [query, setQuery] = useState('');
   const {user} = useAuthContext()
+
+  const [filteredJobs, setFilteredJobs] = useState([]);  // Initialize with empty array
+  const [query, setQuery] = useState(''); //for search
+
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const response = await fetch('https://backend-o118.onrender.com/api/jobs/', {
+      const response = await fetch('https://backend-o118.onrender.com/api/jobs', {
         headers: {
           'Authorization': `Bearer ${user.token}`
         }
@@ -44,7 +46,7 @@ const Home = () => {
     if (user) {
       fetchJobs();
     }
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   useEffect(() => {
     if (Array.isArray(jobs) && jobs.length > 0) {
