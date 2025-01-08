@@ -79,7 +79,7 @@ const Home = () => {
         <div className="jobs">
           <h3>Jobs you've applied to</h3>
           {filteredJobs.length > 0 ? (
-            filteredJobs.map((job) => <JobDetails key={job._id} job={job} />)
+            jobs.map((job) => <JobDetails key={job._id} job={job} />)
           ) : (
             <p>No jobs found for your search.</p>
           )}
