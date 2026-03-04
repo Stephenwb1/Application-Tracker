@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useJobsContext } from '../hooks/useJobsContext';
 import { useAuthContext} from '../hooks/useAuthContext'
+import API_URL from '../api'
 // components
 import JobDetails from '../components/JobDetails';
 import JobForm from '../components/JobForm';
@@ -20,7 +21,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const response = await fetch('/api/jobs', {
+      const response = await fetch(`${API_URL}/api/jobs`, {
         headers: {
           'Authorization': `Bearer ${user.token}`
         }

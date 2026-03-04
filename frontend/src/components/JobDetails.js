@@ -1,5 +1,6 @@
 import {useJobsContext} from '../hooks/useJobsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
+import API_URL from '../api'
 
 //date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
@@ -12,7 +13,7 @@ const JobDetails = ({job}) => {
             return
         }
 
-        const response = await fetch('/api/jobs/' + job._id, {
+        const response = await fetch(`${API_URL}/api/jobs/` + job._id, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${user.token}`
@@ -26,7 +27,7 @@ const JobDetails = ({job}) => {
         }
 
         //sort titles by popular
-        const response1 = await fetch('/api/jobs/',
+        const response1 = await fetch(`${API_URL}/api/jobs/`,
             {
                 headers: {
                     'Authorization': `Bearer ${user.token}`

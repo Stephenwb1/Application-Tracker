@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const jobRoutes = require('./routes/jobs')
 const userRoutes = require('./routes/user')
 
@@ -9,6 +10,22 @@ const userRoutes = require('./routes/user')
 const app = express();
 
 //middleware
+const allowedOrigins = [
+    'http://localhost:3000',
+    process.env.FRONTEND_URL,
+].filter(Boolean)
+
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin) || origin.startsWith('chrome-extension://')) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    },
+    credentials: true
+}))
+
 app.use(express.json());
 
 app.use((req, res, next) => {

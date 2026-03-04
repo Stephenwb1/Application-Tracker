@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import {useJobsContext} from '../hooks/useJobsContext'
 import { useAuthContext } from '../hooks/useAuthContext'
+import API_URL from '../api'
 const JobForm = () => {
     const {dispatch} = useJobsContext()
     const {user} = useAuthContext()
@@ -24,7 +25,7 @@ const JobForm = () => {
         const job = {company, title, link}
         console.log("Job data being sent:", job)
 
-        const response = await fetch('/api/jobs', {
+        const response = await fetch(`${API_URL}/api/jobs`, {
             method: 'POST',
             body: JSON.stringify(job),
             headers: {
@@ -52,7 +53,7 @@ const JobForm = () => {
 
 
 
-            const response = await fetch('/api/jobs', {
+            const response = await fetch(`${API_URL}/api/jobs`, {
                 //method: 'POST',
                 //body: JSON.stringify(job),
                 headers: {
