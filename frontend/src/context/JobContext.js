@@ -19,12 +19,7 @@ export const jobsReducer = (state, action) => {//this updates the list of jobs w
             }
         case 'SET_POPULAR_TITLES':
             return {
-                ...state, 
-                popularTitles: action.payload
-            }
-        case 'SET_POPULAR_TITLES':
-            return {
-                ...state, 
+                ...state,
                 popularTitles: action.payload
             }
         default:
