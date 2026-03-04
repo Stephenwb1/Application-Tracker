@@ -3,7 +3,7 @@ import { PieChart, Pie, Sector, ResponsiveContainer, Cell } from 'recharts';
 
 
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#6ee7b7", "#60a5fa", "#f472b6", "#fb923c"];
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
@@ -20,9 +20,6 @@ const renderActiveShape = (props) => {
 
   return (
     <g>
-      <text x={cx} y={cy} dy={8} textAnchor="middle" fill={fill}>
-        {payload.name}
-      </text>
       <Sector
         cx={cx}
         cy={cy}
@@ -42,10 +39,12 @@ const renderActiveShape = (props) => {
         fill={fill}
       />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
-      <circle cx={ex} cy={ey} r={2} fill={fill} stroke="none" />
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} textAnchor={textAnchor} fill="#333">{`${value} Applications`}</text>
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey} dy={18} textAnchor={textAnchor} fill="#999">
-        {`(${(percent * 100).toFixed(2)}%)`}
+      <circle cx={ex} cy={ey} r={3} fill={fill} stroke="none" />
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey - 6} textAnchor={textAnchor} fill="#f1f5f9" fontSize={17} fontWeight={600}>
+        {payload.name}
+      </text>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey + 16} textAnchor={textAnchor} fill="#94a3b8" fontSize={15}>
+        {`${value} · ${(percent * 100).toFixed(0)}%`}
       </text>
     </g>
   );
@@ -65,7 +64,7 @@ export default class JobCategoryChart extends PureComponent {
 
   render() {
 
-    const {data} = this.props;
+    const { data, selectedTitle, onTitleSelect } = this.props;
 
     return (
       <ResponsiveContainer width="100%" height="100%">
@@ -76,16 +75,24 @@ export default class JobCategoryChart extends PureComponent {
             data={data}
             cx="50%"
             cy="50%"
-            innerRadius={80}
-            outerRadius={100}
+            innerRadius={0}
+            outerRadius={180}
             fill="#8884d8"
             dataKey="value"
             onMouseEnter={this.onPieEnter}
+            onClick={(pieData) => onTitleSelect && onTitleSelect(pieData.name)}
+            style={{ cursor: 'pointer' }}
           >
           {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
-        </Pie>
+            <Cell
+              key={`cell-${index}`}
+              fill={COLORS[index % COLORS.length]}
+              opacity={selectedTitle && entry.name !== selectedTitle ? 0.3 : 1}
+              stroke={entry.name === selectedTitle ? '#ffffff' : 'none'}
+              strokeWidth={entry.name === selectedTitle ? 2 : 0}
+            />
+          ))}
+          </Pie>
         </PieChart>
       </ResponsiveContainer>
     );

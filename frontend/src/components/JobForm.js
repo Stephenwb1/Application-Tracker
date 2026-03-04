@@ -88,13 +88,28 @@ const JobForm = () => {
                 className={emptyFields.includes('company') ? 'error' : ''}
             />
             <label></label>
-            <input
-                type='text'
-                placeholder="Title (optional)"
+            <select
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
                 className={emptyFields.includes('title') ? 'error' : ''}
-            />
+            >
+                <option value="">Title (optional)</option>
+                <option>Software Engineer</option>
+                <option>Software Engineer Intern</option>
+                <option>Hardware Engineer</option>
+                <option>Hardware Engineer Intern</option>
+                <option>Embedded Systems Engineer</option>
+                <option>Frontend Engineer</option>
+                <option>Backend Engineer</option>
+                <option>Full Stack Engineer</option>
+                <option>Data Scientist</option>
+                <option>Machine Learning Engineer</option>
+                <option>DevOps Engineer</option>
+                <option>Systems Engineer</option>
+                <option>Research Engineer</option>
+                <option>Internship</option>
+                <option>Other</option>
+            </select>
             <label></label>
             <input
                 type='text'

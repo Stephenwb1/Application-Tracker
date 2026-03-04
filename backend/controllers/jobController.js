@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 
 //get all the jobs
 const getJobs = async (req, res) => {
-    const user_id = req.user_id
+    const user_id = req.user._id
     const jobs = await Job.find({ user_id }).sort({createdAt: -1})
 
     res.status(200).json(jobs)
@@ -64,7 +64,8 @@ const createJob = async (req, res) => {
 
     try {
         const user_id = req.user._id
-        const job = await Job.create({company, title, link, user_id})
+        const normalizedCompany = company.trim().replace(/\b\w/g, c => c.toUpperCase())
+        const job = await Job.create({company: normalizedCompany, title, link, user_id})
         res.status(200).json(job)
     } catch(error) {
         res.status(400).json({error: error.message})

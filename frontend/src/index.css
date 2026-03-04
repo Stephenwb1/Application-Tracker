@@ -1,35 +1,55 @@
 /* google font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&display=swap');
+
+html {
+  font-size: 20px;
+}
 
 /* layout */
 :root {
-  --primary: #b5ceba;
-  --error: #e7195a;
+  --primary: #6ee7b7;
+  --primary-dim: #34d399;
+  --error: #f87171;
+  --bg-body: #0f172a;
+  --bg-surface: #1e293b;
+  --bg-elevated: #2d3748;
+  --bg-input: #0f172a;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border: rgba(255, 255, 255, 0.08);
 }
 body {
-  background: #121212;
+  background: var(--bg-body);
   margin: 0;
-  font-family: "Poppins";
+  font-family: "Poppins", sans-serif;
+  color: var(--text-primary);
 }
 header {
-  background: #3f3f3f;
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border);
 }
 header .container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 10px 20px;
+  padding: 14px 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 header a {
-  color: #fff;
+  color: var(--text-primary);
   text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
-.pages{
-  max-width: 1400px;
-  padding: 20px;
-  margin: 0 auto;
+header h1 {
+  margin: 0;
+  font-size: 1.4em;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: -0.01em;
+}
+.pages {
+  padding: 32px 40px;
+  margin: 0;
 }
 
 /* homepage */
@@ -38,26 +58,29 @@ header a {
   display: inline;
   top: 20px;
   right: 20px;
-  background: #f1f1f1;
 }
 
 .home {
   display: grid;
-  gap: 50px;
+  gap: 40px;
   grid-template-columns: 1fr 1fr;
   width: 100%;
-  color: #fff;
 }
 .job-details {
-  background: #353735;
-  border-radius: 4px;
-  margin: 20px auto;
-  padding: 20px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 14px auto;
+  padding: 24px;
   position: relative;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.2s ease;
+}
+.job-details:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 .job-details h4 {
-  margin: 0 0 10px 0;
+  margin: 0 0 6px 0;
   font-size: 1.0em;
   color: var(--primary);
 }
@@ -66,56 +89,103 @@ header a {
   padding-left: 40px;
   margin: 0;
   font-size: 0.9em;
-  color: #f1f1f1;
+  color: var(--text-secondary);
 }
 .job-details a {
   color: var(--primary);
 }
 .job-details .material-symbols-outlined {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 16px;
+  right: 16px;
   cursor: pointer;
-  background: #c5d9c9;
+  background: var(--bg-elevated);
   padding: 6px;
   border-radius: 50%;
-  color: #333;
+  color: var(--error);
+  font-size: 18px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.job-details .material-symbols-outlined:hover {
+  background: rgba(248, 113, 113, 0.15);
 }
 
 /* new job form */
-label, input {
+label, input, select {
   display: block;
 }
-input {
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 20px;
+label {
+  font-size: 0.85em;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+input, select {
+  padding: 12px 14px;
+  margin-top: 4px;
+  margin-bottom: 18px;
   width: 100%;
-  border: 0px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
   box-sizing: border-box;
-  background-color: #7a7b7a;
-  color: #f1f1f1;
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95em;
+  transition: border-color 0.2s ease;
+}
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+input::placeholder {
+  color: var(--text-secondary);
 }
 form button {
   background: var(--primary);
   border: 0;
-  color: #121212;
-  padding: 10px;
-  font-family: "Poppins";
-  border-radius: 4px;
+  color: #0f172a;
+  padding: 12px 24px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 0.95em;
+  transition: background 0.2s ease;
+}
+form button:hover {
+  background: var(--primary-dim);
 }
 div.error {
-  padding: 10px;
-  background: #ffefef;
+  padding: 10px 14px;
+  background: rgba(248, 113, 113, 0.1);
   border: 1px solid var(--error);
   color: var(--error);
-  border-radius: 4px;
-  margin: 20px 0;
+  border-radius: 6px;
+  margin: 16px 0;
+  font-size: 0.9em;
 }
 input.error {
   border: 1px solid var(--error);
+}
+
+/* filter badge */
+.filter-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(110, 231, 183, 0.12);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-size: 0.75em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.filter-badge:hover {
+  background: rgba(110, 231, 183, 0.22);
 }
 
 /* navbar */
@@ -123,24 +193,43 @@ nav {
   display: flex;
   align-items: center;
 }
+nav div {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
 nav a {
-  margin-left: 10px;
+  margin-left: 12px;
+  color: var(--text-secondary);
+  font-size: 0.9em;
 }
 nav button {
-  background: #fff;
+  background: transparent;
   color: var(--primary);
-  border: 2px solid var(--primary);
-  padding: 6px 10px;
-  border-radius: 4px;
-  font-family: "Poppins";
+  border: 1.5px solid var(--primary);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-family: "Poppins", sans-serif;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: background 0.2s ease;
 }
+nav button:hover {
+  background: rgba(110, 231, 183, 0.1);
+}
+
 /* auth forms */
 form.signup, form.login {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 4px;
+  max-width: 480px;
+  margin: 60px auto;
+  padding: 40px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+form.signup h3, form.login h3 {
+  color: var(--text-primary);
+  margin-top: 0;
 }

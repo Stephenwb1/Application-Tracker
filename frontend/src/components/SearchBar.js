@@ -17,7 +17,6 @@ const SearchBar = ({ onSearch }) => {
         placeholder="Search for jobs..."
         value={query}
         onChange={handleInputChange}
-        style={{ padding: '8px', fontSize: '16px' }}
       />
     </div>
   );

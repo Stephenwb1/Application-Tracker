@@ -11,7 +11,12 @@ const Home = () => {
   const {jobs, popularTitles, dispatch} = useJobsContext()
   const [filteredJobs, setFilteredJobs] = useState([]);  // Initialize with empty array
   const [query, setQuery] = useState('');
+  const [selectedTitle, setSelectedTitle] = useState(null);
   const {user} = useAuthContext()
+
+  const handleTitleSelect = (title) => {
+    setSelectedTitle(prev => prev === title ? null : title);
+  };
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -44,7 +49,7 @@ const Home = () => {
     if (user) {
       fetchJobs();
     }
-  }, [dispatch]);
+  }, [dispatch, user]);
 
   useEffect(() => {
     if (Array.isArray(jobs) && jobs.length > 0) {
@@ -75,22 +80,36 @@ const Home = () => {
         
         {/* Jobs List */}
         <div className="jobs">
-          <h3>Jobs you've applied to</h3>
-          {filteredJobs.length > 0 ? (
-            filteredJobs.map((job) => <JobDetails key={job._id} job={job} />)
-          ) : (
-            <p>No jobs found for your search.</p>
-          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+            <h3 style={{ margin: 0 }}>Jobs you've applied to</h3>
+            {selectedTitle && (
+              <span className="filter-badge" onClick={() => setSelectedTitle(null)}>
+                {selectedTitle} &times;
+              </span>
+            )}
+          </div>
+          {(() => {
+            const displayedJobs = selectedTitle
+              ? filteredJobs.filter(job => job.title === selectedTitle)
+              : filteredJobs;
+            return displayedJobs.length > 0 ? (
+              displayedJobs.map((job) => <JobDetails key={job._id} job={job} />)
+            ) : (
+              <p>No jobs found.</p>
+            );
+          })()}
         </div>
       </div>
 
       {/* Right column: Job Category Chart */}
-      <div style={{ gridColumn: '2 / 2', width: '600px', height: '300px', paddingTop: '50px' }}>
-        <JobCategoryChart 
+      <div style={{ gridColumn: '2 / 2', width: '100%', height: '500px', paddingTop: '20px' }}>
+        <JobCategoryChart
           data={(popularTitles || []).map(item => ({
             name: item.title,
             value: item.count
           }))}
+          selectedTitle={selectedTitle}
+          onTitleSelect={handleTitleSelect}
         />
       </div>
     </div>
