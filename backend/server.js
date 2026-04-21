@@ -5,12 +5,9 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const jobRoutes = require('./routes/jobs')
 const userRoutes = require('./routes/user')
-const resumeRoutes = require('./routes/resume')
 
-//express app
 const app = express();
 
-//middleware
 const allowedOrigins = [
     'http://localhost:3000',
     'http://localhost:5173',
@@ -19,9 +16,10 @@ const allowedOrigins = [
 
 app.use(cors({
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin) || origin.startsWith('chrome-extension://') || origin.startsWith('moz-extension://')) {
+        if (!origin || allowedOrigins.includes(origin) || origin.startsWith('chrome-extension://') || origin.startsWith('moz-extension://') || /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(origin)) {
             callback(null, true)
         } else {
+            console.log('CORS blocked origin:', origin)
             callback(new Error('Not allowed by CORS'))
         }
     },
@@ -37,14 +35,30 @@ app.use((req, res, next) => {
 
 app.use('/api/jobs', jobRoutes)
 app.use('/api/user', userRoutes)
-app.use('/api/resume', resumeRoutes)
 
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => {
-        app.listen(process.env.PORT, () => {
-            console.log('connected to db; listening on port', process.env.PORT)
-        })
-    })
-    .catch((error) => {
-        console.log(error)
-    })
+// Connect to MongoDB (cached across warm serverless invocations)
+let dbConnected = false
+const connectDB = async () => {
+    if (dbConnected) return
+    await mongoose.connect(process.env.MONGO_URI)
+    dbConnected = true
+}
+
+app.use(async (req, res, next) => {
+    try {
+        await connectDB()
+        next()
+    } catch (err) {
+        res.status(500).json({ error: 'Database connection failed' })
+    }
+})
+
+// Local dev: start the server normally
+if (!process.env.VERCEL) {
+    const PORT = process.env.PORT || 4000
+    connectDB()
+        .then(() => app.listen(PORT, () => console.log('connected to db; listening on port', PORT)))
+        .catch(console.error)
+}
+
+module.exports = app
