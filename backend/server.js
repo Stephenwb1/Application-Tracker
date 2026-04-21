@@ -33,9 +33,6 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use('/api/jobs', jobRoutes)
-app.use('/api/user', userRoutes)
-
 // Connect to MongoDB (cached across warm serverless invocations)
 let dbConnected = false
 const connectDB = async () => {
@@ -52,6 +49,9 @@ app.use(async (req, res, next) => {
         res.status(500).json({ error: 'Database connection failed' })
     }
 })
+
+app.use('/api/jobs', jobRoutes)
+app.use('/api/user', userRoutes)
 
 // Local dev: start the server normally
 if (!process.env.VERCEL) {
