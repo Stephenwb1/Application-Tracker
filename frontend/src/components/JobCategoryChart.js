@@ -10,11 +10,11 @@ const renderActiveShape = (props) => {
   const { cx, cy, midAngle, innerRadius, outerRadius, startAngle, endAngle, fill, payload, percent, value } = props;
   const sin = Math.sin(-RADIAN * midAngle);
   const cos = Math.cos(-RADIAN * midAngle);
-  const sx = cx + (outerRadius + 10) * cos;
-  const sy = cy + (outerRadius + 10) * sin;
-  const mx = cx + (outerRadius + 30) * cos;
-  const my = cy + (outerRadius + 30) * sin;
-  const ex = mx + (cos >= 0 ? 1 : -1) * 22;
+  const sx = cx + (outerRadius + 8) * cos;
+  const sy = cy + (outerRadius + 8) * sin;
+  const mx = cx + (outerRadius + 20) * cos;
+  const my = cy + (outerRadius + 20) * sin;
+  const ex = mx + (cos >= 0 ? 1 : -1) * 14;
   const ey = my;
   const textAnchor = cos >= 0 ? 'start' : 'end';
 
@@ -40,10 +40,10 @@ const renderActiveShape = (props) => {
       />
       <path d={`M${sx},${sy}L${mx},${my}L${ex},${ey}`} stroke={fill} fill="none" />
       <circle cx={ex} cy={ey} r={3} fill={fill} stroke="none" />
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey - 6} textAnchor={textAnchor} fill="#f1f5f9" fontSize={17} fontWeight={600}>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 8} y={ey - 5} textAnchor={textAnchor} fill="#f1f5f9" fontSize={13} fontWeight={600}>
         {payload.name}
       </text>
-      <text x={ex + (cos >= 0 ? 1 : -1) * 12} y={ey + 16} textAnchor={textAnchor} fill="#94a3b8" fontSize={15}>
+      <text x={ex + (cos >= 0 ? 1 : -1) * 8} y={ey + 13} textAnchor={textAnchor} fill="#94a3b8" fontSize={12}>
         {`${value} · ${(percent * 100).toFixed(0)}%`}
       </text>
     </g>
@@ -76,7 +76,7 @@ export default class JobCategoryChart extends PureComponent {
             cx="50%"
             cy="50%"
             innerRadius={0}
-            outerRadius={180}
+            outerRadius={110}
             fill="#8884d8"
             dataKey="value"
             onMouseEnter={this.onPieEnter}

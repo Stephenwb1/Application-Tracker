@@ -8,6 +8,9 @@ import JobForm from '../components/JobForm';
 import SearchBar from '../components/SearchBar';
 import JobCategoryChart from '../components/JobCategoryChart'
 
+const toTitleCase = (str) =>
+  str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
+
 const Home = () => {
   const {jobs, popularTitles, dispatch} = useJobsContext()
   const [filteredJobs, setFilteredJobs] = useState([]);  // Initialize with empty array
@@ -35,7 +38,8 @@ const Home = () => {
         const titleCounts = {}
 
         json.forEach((job) => {
-            titleCounts[job.title] = (titleCounts[job.title] || 0) + 1
+            const normalized = job.title ? toTitleCase(job.title) : 'Other'
+            titleCounts[normalized] = (titleCounts[normalized] || 0) + 1
         })
 
         const sortedTitles = Object.entries(titleCounts)
@@ -69,41 +73,12 @@ const Home = () => {
   };
 
   return (
-    <div className="home" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', width: '100%' }}>
-      {/* Left column: JobForm, SearchBar, and Jobs List */}
-      <div style={{ gridColumn: '1 / 2', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        
-        {/* Job Form */}
-        <JobForm />
-        
-        {/* Search Bar under Job Form */}
-        <SearchBar query={query} onSearch={handleSearch} />
-        
-        {/* Jobs List */}
-        <div className="jobs">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-            <h3 style={{ margin: 0 }}>Jobs you've applied to</h3>
-            {selectedTitle && (
-              <span className="filter-badge" onClick={() => setSelectedTitle(null)}>
-                {selectedTitle} &times;
-              </span>
-            )}
-          </div>
-          {(() => {
-            const displayedJobs = selectedTitle
-              ? filteredJobs.filter(job => job.title === selectedTitle)
-              : filteredJobs;
-            return displayedJobs.length > 0 ? (
-              displayedJobs.map((job) => <JobDetails key={job._id} job={job} />)
-            ) : (
-              <p>No jobs found.</p>
-            );
-          })()}
-        </div>
-      </div>
+    <div className="home">
+      <JobForm />
 
-      {/* Right column: Job Category Chart */}
-      <div style={{ gridColumn: '2 / 2', width: '100%', height: '500px', paddingTop: '20px' }}>
+      <SearchBar query={query} onSearch={handleSearch} />
+
+      <div style={{ width: '100%', height: '300px' }}>
         <JobCategoryChart
           data={(popularTitles || []).map(item => ({
             name: item.title,
@@ -112,6 +87,30 @@ const Home = () => {
           selectedTitle={selectedTitle}
           onTitleSelect={handleTitleSelect}
         />
+      </div>
+
+      <div className="jobs">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+          <h3 style={{ margin: 0 }}>Jobs you've applied to</h3>
+          <span style={{ color: '#94a3b8', fontSize: '0.85rem' }}>
+            Total: {filteredJobs.length}
+          </span>
+          {selectedTitle && (
+            <span className="filter-badge" onClick={() => setSelectedTitle(null)}>
+              {selectedTitle} &times;
+            </span>
+          )}
+        </div>
+        {(() => {
+          const displayedJobs = selectedTitle
+            ? filteredJobs.filter(job => job.title && job.title.toLowerCase() === selectedTitle.toLowerCase())
+            : filteredJobs;
+          return displayedJobs.length > 0 ? (
+            displayedJobs.map((job) => <JobDetails key={job._id} job={job} />)
+          ) : (
+            <p>No jobs found.</p>
+          );
+        })()}
       </div>
     </div>
   );

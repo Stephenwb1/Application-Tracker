@@ -60,16 +60,13 @@ const JobDetails = ({job}) => {
     
     return (
         <div className="job-details">
-
-            {isLink && <h4 style={{display: 'inline'}}>
-                <a 
-                href={formatLink(job.link)} target="_blank" rel="noopener noreferrer">{job.company}
-                </a>
-                </h4>}
-            {!isLink && <h4 style={{display: 'inline'}}>{job.company}</h4>}
-            
-            <p>{job.title}</p>
-            <p style={{float: 'right', paddingRight: '55px'}}>{formatDistanceToNow(new Date(job.createdAt), {addSuffix: true})}</p>
+            {isLink
+                ? <h4><a href={formatLink()} target="_blank" rel="noopener noreferrer">{job.company}</a></h4>
+                : <h4>{job.company}</h4>}
+            <div className="job-meta">
+                <p>{job.title}</p>
+                <p>{formatDistanceToNow(new Date(job.createdAt), {addSuffix: true})}</p>
+            </div>
             <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
         </div>
     );

@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const jobRoutes = require('./routes/jobs')
 const userRoutes = require('./routes/user')
+const resumeRoutes = require('./routes/resume')
 
 //express app
 const app = express();
@@ -12,6 +13,7 @@ const app = express();
 //middleware
 const allowedOrigins = [
     'http://localhost:3000',
+    'http://localhost:5173',
     process.env.FRONTEND_URL,
 ].filter(Boolean)
 
@@ -35,6 +37,7 @@ app.use((req, res, next) => {
 
 app.use('/api/jobs', jobRoutes)
 app.use('/api/user', userRoutes)
+app.use('/api/resume', resumeRoutes)
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {

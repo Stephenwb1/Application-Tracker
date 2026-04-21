@@ -64,8 +64,11 @@ const JobForm = () => {
             //sort titles by popular
             const titleCounts = {}
             console.log("STUFF:", json1)
+            const toTitleCase = (str) =>
+                str.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())
             json1.forEach((job) => {
-                titleCounts[job.title] = (titleCounts[job.title] || 0) + 1
+                const normalized = job.title ? toTitleCase(job.title) : 'Other'
+                titleCounts[normalized] = (titleCounts[normalized] || 0) + 1
             })
 
             const sortedTitles = Object.entries(titleCounts)
@@ -89,28 +92,13 @@ const JobForm = () => {
                 className={emptyFields.includes('company') ? 'error' : ''}
             />
             <label></label>
-            <select
+            <input
+                type='text'
+                placeholder='Title (optional)'
                 onChange={(e) => setTitle(e.target.value)}
                 value={title}
                 className={emptyFields.includes('title') ? 'error' : ''}
-            >
-                <option value="">Title (optional)</option>
-                <option>Software Engineer</option>
-                <option>Software Engineer Intern</option>
-                <option>Hardware Engineer</option>
-                <option>Hardware Engineer Intern</option>
-                <option>Embedded Systems Engineer</option>
-                <option>Frontend Engineer</option>
-                <option>Backend Engineer</option>
-                <option>Full Stack Engineer</option>
-                <option>Data Scientist</option>
-                <option>Machine Learning Engineer</option>
-                <option>DevOps Engineer</option>
-                <option>Systems Engineer</option>
-                <option>Research Engineer</option>
-                <option>Internship</option>
-                <option>Other</option>
-            </select>
+            />
             <label></label>
             <input
                 type='text'
