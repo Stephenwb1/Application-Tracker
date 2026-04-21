@@ -2,8 +2,8 @@ import { useState } from "react"
 import { useLogin } from "../hooks/useLogin"
 
 const Login = () => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('123@gmail.com')
+  const [password, setPassword] = useState('123')
   const {login, error, isLoading} = useLogin()
 
   const handleSubmit = async (e) => {
